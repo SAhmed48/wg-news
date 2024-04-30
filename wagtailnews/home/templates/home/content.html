@@ -1,0 +1,86 @@
+{% extends "base.html" %}
+
+{% load wagtailcore_tags %}
+{% load wagtailcore_tags wagtailimages_tags %}
+{% block extra_css %}
+
+{% endblock %}
+{% block body_class %}template-blogpage{% endblock %}
+
+{% block content %}
+    
+    <div class="row">
+        {% comment %} <div class="row">
+            {% for item in page.gallery_images.all %}
+                <div style="float: inline-start; margin: 10px">
+                    {% image item.image fill-320x240 %}
+                    <p>{{ item.caption }}</p>
+                </div>
+            {% endfor %}
+        </div> {% endcomment %}
+        <div class="row">
+            <div id="carouselExampleControls" class="carousel slide" data-bs-ride="carousel">
+                <div class="carousel-inner">
+                    {% for item in page.gallery_images.all %}
+                        {% if forloop.counter0 == 0 %}
+                            <div class="carousel-item active">
+                                <img src={{ item.image.file.url }}  style="height: 300px !important" class="d-block w-100" alt="...">
+                            </div>
+                        {% else %}
+                            <div class="carousel-item" >
+                                <img src={{ item.image.file.url }} style="height: 300px !important" class="d-block w-100" alt="...">
+                            </div> 
+                            
+                        {% endif %}
+                    {% endfor %}
+                    {% comment %} <div class="carousel-item active">
+                        <img src="/media/original_images/test_article.jpg" class="d-block w-100" alt="...">
+                    </div>
+                    <div class="carousel-item">
+                        <img src="/media/original_images/test_article.jpg" class="d-block w-100" alt="...">
+                    </div>
+                    <div class="carousel-item">
+                        <img src="/media/original_images/test_article.jpg" class="d-block w-100" alt="...">
+                    </div> {% endcomment %}
+                </div>
+                <button class="carousel-control-prev" type="button" data-bs-target="#carouselExampleControls" data-bs-slide="prev">
+                  <span class="carousel-control-prev-icon" aria-hidden="true"></span>
+                  <span class="visually-hidden">Previous</span>
+                </button>
+                <button class="carousel-control-next" type="button" data-bs-target="#carouselExampleControls" data-bs-slide="next">
+                  <span class="carousel-control-next-icon" aria-hidden="true"></span>
+                  <span class="visually-hidden">Next</span>
+                </button>
+              </div>
+        </div>
+        <div class="row">
+            <div class="row">
+                <div class="col-md-4">
+                </div>
+                <div class="col-md-8">
+                    <div class="col-md-12"><h1>{{ page.article_title }}</h1></div>
+                    <p class="meta text-muted">{{ page.date }}</p>
+                </div>
+            </div>
+            <div class="col-md-2">
+                <img src="/media/original_images/test_ad_image.png" />
+            </div>
+            <div class="col-md-2" style="margin-top: 40px">
+                <h5>Tags:</h5>
+                <ul>
+                    {% for tag in page.tags.all %}
+                        <li><a href="/hub?tag={{ tag }}">{{ tag }}</a></li>
+                    {% endfor %}
+                </ul>
+            </div>
+            <div class="col-md-6">
+                {{ page.body|richtext }}
+            </div>
+            <div class="col-md-2">
+                <img src="/media/original_images/test_ad_image.png" />
+            </div>
+        </div>
+    </div>
+    {% comment %} <p><a href="{{ page.get_parent.url }}">Return to Home</a></p> {% endcomment %}
+
+{% endblock %}

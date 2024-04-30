@@ -6,7 +6,8 @@
 {% block body_class %}template-blogindexpage{% endblock %}
 
 {% block content %}
-    <h1 style="margin-bottom: 20px">Welcome to Wagtail News!</h1>
+    <h1 style="margin-bottom: 20px">{{ hub_page_title|upper  }}</h1>
+
     <div class="row">
         {% for post in articles %}
             <div class="col-md-6">
@@ -25,11 +26,11 @@
             </div>
         {% endfor %}
     </div>
-    <h3  style="margin-bottom: 10px; margin-top: 20px">Hub Peeks</h3>
+
+    <h3 style="margin-bottom: 10px; margin-top: 20px;">Hub Peek</h3>
     <div class="row">
-        {% for key, values in hub_peeks.items %}
-            <div class="col-md-6 card">
-                <h2><a href="/hub?tag={{ key }}">{{ key }}</a></h2>
+        <div class="col-md-6 card">
+            {% for key, values in hub_peek.items %}
                 <div class="row">
                     {% for post in values %}
                         <div class="row">
@@ -45,7 +46,7 @@
                         </div>
                     {% endfor %}
                 </div>
-            </div>
-        {% endfor %}
+            {% endfor %}
+        </div>
     </div>
 {% endblock %}
