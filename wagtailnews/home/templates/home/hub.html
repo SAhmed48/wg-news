@@ -1,0 +1,52 @@
+{% extends "base.html" %}
+
+{% load wagtailcore_tags %}
+{% load wagtailcore_tags wagtailimages_tags %}
+
+{% block body_class %}template-blogindexpage{% endblock %}
+
+{% block content %}
+    <h1 style="margin-bottom: 20px">{{ hub_page_title|upper  }}</h1>
+
+    <div class="row">
+        {% for post in articles %}
+            <div class="col-md-6">
+                <div class="row">
+                    <div class="col-md-4">
+                        {% with post.specific.main_image as main_image %}
+                            {% if main_image %}{% image main_image max-160x100 %}{% endif %}
+                        {% endwith %}
+                    </div>
+                    <div class="col-md-8">
+                        <h3><a href="{% pageurl post %}">{{ post.specific.article_title }}</a></h3>
+                        {{ post.specific.body|richtext }}
+                    </div>
+                </div>
+                
+            </div>
+        {% endfor %}
+    </div>
+
+    <h3 style="margin-bottom: 10px; margin-top: 20px;">Hub Peek</h3>
+    <div class="row">
+        <div class="col-md-6 card">
+            {% for key, values in hub_peek.items %}
+                <div class="row">
+                    {% for post in values %}
+                        <div class="row">
+                            <div class="col-md-4">
+                                {% with post.specific.main_image as main_image %}
+                                    {% if main_image %}{% image main_image max-160x100 %}{% endif %}
+                                {% endwith %}
+                            </div>
+                            <div class="col-md-8">
+                                <h4><a href="{% pageurl post %}">{{ post.specific.article_title }}</a></h4>
+                                {{ post.specific.body|richtext }}
+                            </div>
+                        </div>
+                    {% endfor %}
+                </div>
+            {% endfor %}
+        </div>
+    </div>
+{% endblock %}
